@@ -36,8 +36,7 @@
   <dependencies>
     <dependency>
       <groupId>org.influxdb</groupId>
-      <artifactId>influxdb-inflow-sample</artifactId>
-      <packaging>jar</packaging>
+      <artifactId>influxdb-inflow</artifactId>
       <version>0.1.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
