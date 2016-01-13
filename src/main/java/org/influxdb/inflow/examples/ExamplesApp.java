@@ -157,11 +157,11 @@ public class ExamplesApp {
     // create a point to be recorded as "now"
     Point point5 = Point
             .measurement("test_metric")
-            .field("value", 0.85)
-            .tag("host", "server01")
+            .field("value", 0.87)
+            .tag("host", "server02")
             .tag("region", "us-west")
-            .tag("proto", "udp")
-            .field("cpucount", 10)
+            .field("cpucount", 16)
+            //.time(1452663820, TimeUnit.NANOSECONDS) // 2016-01-13 05:43:40 GMT
             .build();
 
     // write the point using UDP
