@@ -4,11 +4,16 @@ import java.util.concurrent.TimeUnit;
 import org.influxdb.dto.Point;
 import org.influxdb.inflow.Client;
 import org.influxdb.inflow.Database;
+import org.influxdb.inflow.InflowDatabaseException;
 import org.influxdb.inflow.InflowException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ExamplesApp {
+  
+  private final static Logger logger = LoggerFactory.getLogger(ExamplesApp.class);
 
-  public static void main(String[] args) throws InflowException {
+  public static void main(String[] args) throws InflowException, InflowDatabaseException {
     
     // Initializeation examples
     exampleInitializeClient();
@@ -31,11 +36,18 @@ public class ExamplesApp {
     Database databaseFromURI = Database.fromURI("http://inflowexample:inflow011@bludgeon:8086/inflow1");
   }
   
-  public static void exampleWriteData() throws InflowException {
-    Client client = Client.fromURI("http://inflowexample:inflow011@bludgeon:8086");
+  public static void exampleWriteData() throws InflowException, InflowDatabaseException {
+    String influxdbURI = "http://inflowexample:inflow011@bludgeon:8086";
+    
+    logger.info("Creating client from URI " + influxdbURI);
+    Client client = Client.fromURI(influxdbURI);
 
     // specify to use inflow_test database
     Database database = client.selectDB("inflow_test");
+    
+    // make sure database exists before trying to write to it
+    logger.info("Creating database " + database.getName() + " before writing to it");
+    database.create();
 
     // create some points to write.
     // The name of a measurement and the value are mandatory. Additional fields, tags and a timestamp are optional.
@@ -57,6 +69,7 @@ public class ExamplesApp {
 
     Point[] points = new Point[]{point1, point2};
 
+    logger.info("Writing " + points.length + " points to database " + database.getName());
     database.writePoints(points);
   }
 
