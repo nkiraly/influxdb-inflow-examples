@@ -2,29 +2,33 @@ package org.influxdb.inflow.examples;
 
 import java.util.concurrent.TimeUnit;
 import org.influxdb.dto.Point;
-import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
 import org.influxdb.inflow.Client;
 import org.influxdb.inflow.Database;
+import org.influxdb.inflow.DriverInterface;
+import org.influxdb.inflow.DriverUDP;
 import org.influxdb.inflow.InflowDatabaseException;
 import org.influxdb.inflow.InflowException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ExamplesApp {
-  
+
   private final static Logger logger = LoggerFactory.getLogger(ExamplesApp.class);
 
   public static void main(String[] args) throws InflowException, InflowDatabaseException {
-    
+
     // Initializeation examples
     exampleInitializeClient();
-   
+
     // Reading Data Examples
     exampleReadData();
-    
+
     // Writing Data Examples
     exampleWriteData();
+
+    // Writing Data over UDP Examples
+    exampleWriteDataOverUDP();
   }
   
   public static void exampleInitializeClient() throws InflowException {
@@ -133,6 +137,35 @@ public class ExamplesApp {
 
     Point[] points = new Point[]{point1, point2, point3, point4};
 
+    logger.info("Writing " + points.length + " points to database " + database.getName());
+    database.writePoints(points);
+  }
+
+  public static void exampleWriteDataOverUDP() throws InflowException, InflowDatabaseException {
+    String influxdbURI = "http://inflowexample:inflow011@influxdb.local:8086";
+
+    logger.info("Creating client from URI " + influxdbURI);
+    Client client = Client.fromURI(influxdbURI);
+
+    logger.info("Specifying UDP driver for client to host " + client.getHost() + " port " + "4444");
+    DriverInterface driver = new DriverUDP(client.getHost(), 4444);
+    client.setDriver(driver);
+
+    // specify to use inflow_test database
+    Database database = client.selectDB("inflow_test");
+
+    // create a point to be recorded as "now"
+    Point point5 = Point
+            .measurement("test_metric")
+            .field("value", 0.85)
+            .tag("host", "server01")
+            .tag("region", "us-west")
+            .tag("proto", "udp")
+            .field("cpucount", 10)
+            .build();
+
+    // write the point
+    Point[] points = new Point[]{point5};
     logger.info("Writing " + points.length + " points to database " + database.getName());
     database.writePoints(points);
   }
