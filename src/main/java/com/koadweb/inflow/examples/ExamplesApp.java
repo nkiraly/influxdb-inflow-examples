@@ -1,14 +1,14 @@
-package org.influxdb.inflow.examples;
+package com.koadweb.inflow.examples;
 
+import com.koadweb.inflow.Client;
+import com.koadweb.inflow.Database;
+import com.koadweb.inflow.DriverInterface;
+import com.koadweb.inflow.DriverUDP;
+import com.koadweb.inflow.InflowDatabaseException;
+import com.koadweb.inflow.InflowException;
 import java.util.concurrent.TimeUnit;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.QueryResult;
-import org.influxdb.inflow.Client;
-import org.influxdb.inflow.Database;
-import org.influxdb.inflow.DriverInterface;
-import org.influxdb.inflow.DriverUDP;
-import org.influxdb.inflow.InflowDatabaseException;
-import org.influxdb.inflow.InflowException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
