@@ -3,9 +3,9 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.influxdb</groupId>
-  <artifactId>influxdb-inflow-sample</artifactId>
+  <artifactId>influxdb-inflow-examples</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.1</version>
+  <version>0.1.2</version>
   <name>Inflow Client Examples</name>
   <description>Inflow InfluxDB Client examples</description>
   <url>http://github.com/nkiraly/influxdb-inflow-examples</url>
@@ -37,7 +37,7 @@
     <dependency>
       <groupId>org.influxdb</groupId>
       <artifactId>influxdb-inflow</artifactId>
-      <version>0.1.1-SNAPSHOT</version>
+      <version>0.1.2</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
