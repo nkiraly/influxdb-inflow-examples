@@ -164,10 +164,9 @@ public class ExamplesApp {
             .field("cpucount", 10)
             .build();
 
-    // write the point
-    Point[] points = new Point[]{point5};
-    logger.info("Writing " + points.length + " points to database " + database.getName());
-    database.writePoints(points);
+    // write the point using UDP
+    logger.info("Writing point5 to database " + database.getName() + " over UDP");
+    database.writePoint(point5);
   }
 
 }
